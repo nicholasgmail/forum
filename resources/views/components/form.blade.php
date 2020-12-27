@@ -6,51 +6,85 @@
             <label for="titleForm" class="form-label">Тitle</label>
             <input type="text" name="title" class="form-control" id="titleForm" placeholder="title">
         </div>
-        <div class="mb-3">
-            <label for="textForm" class="form-label">Text</label>
-            <textarea class="form-control" name="text" id="textForm" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+            <div class="mb-3">
+                <label for="textForm" class="form-label">Text</label>
+                <textarea class="form-control" name="text" id="textForm" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit">Submit</button>
     </form>
 </div>
 @section('script')
 <script>
-    var $ready = (callback) => {
+        var $ready = (callback) => {
         if (document.readyState != "loading") callback();
         else document.addEventListener("DOMContentLoaded", callback);
     }
     $ready(() => {
+        const $toastMain = document.querySelector("main");
         const $formMessag = document.querySelector("#formMessag");
         const $titleForm = document.querySelector("#titleForm");
         const $textForm = document.querySelector("#textForm");
         const $tockenMessag = document.querySelector("#tockenMessag");
         const $valueMeta = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+
         const contentToggle = async function f() {
-            const $data = { title: $titleForm.value, text: $textForm.value, tocken: $tockenMessag.value };
+            const $data = {title: $titleForm.value, text: $textForm.value, tocken: $tockenMessag.value };
             try {
                 const response = await fetch(`/set_message`, {
-                    method: 'POST',
+            method: 'POST',
                     body: JSON.stringify($data),
                     headers: {
-                        'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': $valueMeta
                     }
                 });
-                const $json = await response.json();
-                return $json;
+                if(response.status='200'){
+                const $messageToast = ` <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="
+                                            z-index: 2000;
+                                            position: fixed;
+                                            top: 1%;
+                                            left: 1%;
+                                        ">
+                                                    <div class="toast-header">
+                                                        <strong class="me-auto">Messag</strong>
+                                                        <small class="text-muted">just now</small>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body">
+                                                        Adding messages.
+                                            </div>
+                                                </div> `
+                $toastMain.insertAdjacentHTML('afterbegin', $messageToast);
+                toastClose();
+                $titleForm.value = '';
+                $textForm.value = '';
+                }
+                return response.status;
             } catch (error) {
-                console.log('Ошибка:', error);
+            console.log('Ошибка:', error);
             }
 
         }
-    $formMessag.addEventListener('click', (event) => {
-        event.preventDefault();
-        const $elem = event.target;
-        if ($elem.classList.contains("btn-submit")) {
-            contentToggle();
+         const toastClose = function f(){
+             const $closeToast = document.querySelector(".toast");
+            $closeToast.addEventListener("click", event=>{
+                $elem = event.target;
+                if($elem.classList.contains("btn-close")){
+                    if( $elem.classList.contains("show"))
+                        $closeToast.remove();
+                }
+            })
         }
+
+        $formMessag.addEventListener('click', (event) => {
+            event.preventDefault();
+            const $elem = event.target;
+            if ($elem.classList.contains("btn-submit")) {
+            contentToggle();
+            }
+        })
+
     })
-})
 </script>
 @endsection
