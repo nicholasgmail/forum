@@ -16,4 +16,15 @@ class Theme extends Model
     protected $fillable = [
         'name'
     ];
+    /**
+     * All theme
+     *
+     * @var array
+     */
+    public static function get_theme()
+    {
+        $themes = Theme::get();
+
+        return $themes;
+    }
 }

@@ -17,4 +17,15 @@ class Masseg extends Model
         'title',
         'text',
     ];
+
+    /**
+     * All entries
+     *
+     * @var array
+     */
+    public static function get_masseg(){
+        $masseges = Masseg::get();
+
+        return $masseges;
+    }
 }
