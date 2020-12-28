@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ThemeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/theme', [ThemeController::class, 'index'])->name('theme');
+Route::get('/theme/{theme}', [ThemeController::class, 'show'])->name('theme');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/set_message', [MessageController::class, 'store']);

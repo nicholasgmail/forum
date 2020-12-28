@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Theme;
 use Illuminate\Http\Request;
-use App\Models\Masseg;
 
 class HomeController extends Controller
 {
@@ -25,8 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $masseges = Masseg::get_masseg();
-        
-        return view('home', ['masseges' => $masseges]);
+        $theme = Theme::get_theme();
+
+        return view('home', [
+            'themes' => $theme
+        ]);
     }
 }

@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Forum;
 use App\Models\Masseg;
+use App\Models\Theme;
 use Illuminate\Http\Request;
 
-class MessageController extends Controller
+class ThemeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +18,7 @@ class MessageController extends Controller
     {
         $masseges = Masseg::get_masseg();
 
-        return view('home', ['masseges' => $masseges]);
+        return view('theme', ['masseges' => $masseges]);
     }
 
     /**
@@ -38,38 +39,36 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $new_messag = Masseg::create([
-            'title' => $data["title"],
-            'text' => $data["text"]
-        ]);
-        Forum::create([
-            'user_id' => $data['user'],
-            'theme_id' => $data['theme'],
-            'messeg_id' => $new_messag->id
-        ]);
-        return response("1", 200)
-            ->header('Content-Type', 'text/plain');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Masseg  $masseg
+     * @param  \App\Models\Theme  $theme
      * @return \Illuminate\Http\Response
      */
-    public function show(Masseg $masseg)
+    public function show(Theme $theme)
     {
-        //
+        $theme = Theme::find($theme);
+        $user_id = auth()->user()->id;
+        $theme_id = $theme[0]['id'];
+        $masseges = Masseg::get_theme_messeg($theme_id);
+
+
+        return view('theme', [
+            'name' => $theme[0]["name"],
+            'theme_id' => $theme[0]["id"],
+            'masseges' => $masseges
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Masseg  $masseg
+     * @param  \App\Models\Theme  $theme
      * @return \Illuminate\Http\Response
      */
-    public function edit(Masseg $masseg)
+    public function edit(Theme $theme)
     {
         //
     }
@@ -78,10 +77,10 @@ class MessageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Masseg  $masseg
+     * @param  \App\Models\Theme  $theme
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Masseg $masseg)
+    public function update(Request $request, Theme $theme)
     {
         //
     }
@@ -89,10 +88,10 @@ class MessageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Masseg  $masseg
+     * @param  \App\Models\Theme  $theme
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Masseg $masseg)
+    public function destroy(Theme $theme)
     {
         //
     }

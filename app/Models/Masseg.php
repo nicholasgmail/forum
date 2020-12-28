@@ -23,9 +23,23 @@ class Masseg extends Model
      *
      * @var array
      */
-    public static function get_masseg(){
-        $masseges = Masseg::get();
+    public static function get_masseg()
+    {
+        $masseges = Masseg::paginate(3);
 
+        return $masseges;
+    }
+    /**
+     * All theme messag
+     * @var array
+     */
+    public static function get_theme_messeg($theme)
+    {
+
+        $masseges_id = Forum::where('theme_id', '=', $theme)
+            ->pluck('messeg_id');
+
+        $masseges = Masseg::whereIn('id', $masseges_id)->paginate(3);
         return $masseges;
     }
 }

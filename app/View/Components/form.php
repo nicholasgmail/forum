@@ -6,14 +6,15 @@ use Illuminate\View\Component;
 
 class Form extends Component
 {
+    public $theme_id;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($theme_id)
     {
-        //
+            $this->theme_id = $theme_id;
     }
 
     /**

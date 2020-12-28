@@ -2,6 +2,8 @@
     <form id="formMessag" method="POST" action="/set_message">
         @method('POST')
         <input type="hidden" id="tockenMessag" name="_token" value="{{ csrf_token() }}" />
+        <input type="hidden" id="userMessag" name="_id_user" value="{{ auth()->user()->id  }}" />
+        <input type="hidden" id="userTheme" name="_id_theme" value="{{ $themeId }}" />
         <div class="mb-3">
             <label for="titleForm" class="form-label">Тitle</label>
             <input type="text" name="title" class="form-control" id="titleForm" placeholder="title">
@@ -22,14 +24,16 @@
     $ready(() => {
         const $toastMain = document.querySelector("main");
         const $formMessag = document.querySelector("#formMessag");
+        const $userMessag = document.querySelector("#userMessag");
         const $titleForm = document.querySelector("#titleForm");
         const $textForm = document.querySelector("#textForm");
+        const $userTheme = document.querySelector("#userTheme");
         const $tockenMessag = document.querySelector("#tockenMessag");
         const $valueMeta = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 
         const contentToggle = async function f() {
-            const $data = {title: $titleForm.value, text: $textForm.value, tocken: $tockenMessag.value };
+            const $data = {title: $titleForm.value, text: $textForm.value, user: $userMessag.value, theme: $userTheme.value };
             try {
                 const response = await fetch(`/set_message`, {
             method: 'POST',
@@ -71,7 +75,6 @@
             $closeToast.addEventListener("click", event=>{
                 $elem = event.target;
                 if($elem.classList.contains("btn-close")){
-                    if( $elem.classList.contains("show"))
                         $closeToast.remove();
                 }
             })
