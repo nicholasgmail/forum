@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,16 +17,20 @@ use App\Http\Controllers\ThemeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+
+Route::get('/theme/{theme}', [WelcomeController::class, 'show'])->name('theme');
+
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/theme', [ThemeController::class, 'index'])->name('theme');
+Route::get('/theme', function () {
+return redirect()->to(route('home'));
+});
 Route::get('/theme/{theme}', [ThemeController::class, 'show'])->name('theme');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/set_message', [MessageController::class, 'store']);
+    Route::post('/set_theme', [HomeController::class, 'store']);
 });

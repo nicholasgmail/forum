@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Forum;
-use App\Models\Masseg;
-use App\Models\Theme;
 use Illuminate\Http\Request;
+use App\Models\Theme;
 
-class ThemeController extends Controller
+class WelcomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +14,9 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        $masseges = Masseg::get_masseg();
+        $theme = Theme::get();
 
-        return view('theme', ['masseges' => $masseges]);
+        return view('welcome', compact('theme'));
     }
 
     /**

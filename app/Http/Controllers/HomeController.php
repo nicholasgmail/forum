@@ -30,4 +30,22 @@ class HomeController extends Controller
             'themes' => $theme
         ]);
     }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        $new_theme = Theme::create([
+            'name' => $data["name"],
+        ]);
+        $data = ['id' => $new_theme->id];
+        return response()
+            ->json($data)
+            ->header('Content-Type', 'text/plain');
+    }
+
 }

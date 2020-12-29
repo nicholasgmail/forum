@@ -23,7 +23,7 @@ class Theme extends Model
      */
     public static function get_theme()
     {
-        $themes = Theme::get();
+        $themes = Theme::orderBy('id', 'desc')->paginate(4);
 
         return $themes;
     }
