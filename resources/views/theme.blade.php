@@ -9,7 +9,7 @@
             @foreach ($masseges->items() as $masseg)
             <div class="card text-center mb-3">
                 <div class="card-header">
-                   {{ auth()->user()->name}}
+                   {{ $masseg->name}}
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{$masseg->title}}</h5>

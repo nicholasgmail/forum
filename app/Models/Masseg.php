@@ -36,10 +36,15 @@ class Masseg extends Model
     public static function get_theme_messeg($theme)
     {
 
-        $masseges_id = Forum::where('theme_id', '=', $theme)
-            ->pluck('messeg_id');
+        $masseges= Forum::where('theme_id', '=', $theme)
+            ->join('massegs', function ($join) {
+                $join->on('forums.messeg_id', '=', 'massegs.id')->select('text', 'title');
+            })
+            ->join('users', function ($join) {
+                $join->on('forums.user_id', '=', 'users.id')->select('name');
+            })
+            ->paginate(3);
 
-        $masseges = Masseg::whereIn('id', $masseges_id)->paginate(3);
         return $masseges;
     }
 }
