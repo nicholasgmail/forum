@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\ThemeCollection;
+use App\Models\Theme;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/get_theme/{name}', function ($name) {
+    $theme = new ThemeCollection(Theme::get());
+    $search = $name ?? $name;
+    return $theme->filter(function ($item) use ($search) {
+        return stripos($item['name'], $search) !== false;
+    });;
 });

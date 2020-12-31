@@ -47,5 +47,4 @@ class HomeController extends Controller
             ->json($data)
             ->header('Content-Type', 'text/plain');
     }
-
 }

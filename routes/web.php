@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\Api\V1\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +21,15 @@ use App\Http\Controllers\WelcomeController;
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::get('/theme/{theme}', [WelcomeController::class, 'show'])->name('theme');
+//Route::post('get_theme', [SearchController::class, 'store']);
 
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/theme', function () {
-return redirect()->to(route('home'));
-});
+/* Route::get('/theme', function () {
+    return redirect()->to(route('home'));
+}); */
 Route::get('/theme/{theme}', [ThemeController::class, 'show'])->name('theme');
 
 Route::middleware(['auth'])->group(function () {
