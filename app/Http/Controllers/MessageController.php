@@ -41,10 +41,9 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $massegs_id = $data['masseg'] ? $data['masseg'] : 0;
         $new_messag = Masseg::create([
             'text' => $data["text"],
-            'massegs_id' => $massegs_id
+            'massegs_id' => $data['masseg']
         ]);
         
         Forum::create([

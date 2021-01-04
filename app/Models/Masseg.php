@@ -38,11 +38,13 @@ class Masseg extends Model
 
         $masseges = Forum::where('theme_id', '=', $theme)
             ->join('massegs', function ($join) {
-                $join->on('forums.messeg_id', '=', 'massegs.id')->select('text', 'id', 'massegs_id');
+                $join->on('forums.messeg_id', '=', 'massegs.id');
             })
             ->join('users', function ($join) {
-                $join->on('forums.user_id', '=', 'users.id')->select('name');
-            })            
+                $join->on('forums.user_id', '=', 'users.id');
+            })
+            ->select('forums.messeg_id', 'forums.user_id', 'forums.theme_id', 'users.name', 'massegs.text', 'massegs.massegs_id', 'massegs.created_at')
+            ->orderBy('massegs.created_at', 'desc')
             ->paginate(3);
         return $masseges;
     }

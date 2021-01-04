@@ -31,7 +31,7 @@
 
 
         const contentToggle = async function f() {
-            const $data = {text: $textForm.value, user: $userMessag.value, theme: $userTheme.value };
+            const $data = {text: $textForm.value, user: $userMessag.value, theme: $userTheme.value, masseg: 0 };
             try {
                 const response = await fetch(`/set_message`, {
             method: 'POST',
