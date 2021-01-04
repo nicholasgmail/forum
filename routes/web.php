@@ -31,6 +31,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
     return redirect()->to(route('home'));
 }); */
 Route::get('/theme/{theme}', [ThemeController::class, 'show'])->name('theme');
+Route::get('/quote/{masseg}', [MessageController::class, 'quote'])->name('quote');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/set_message', [MessageController::class, 'store']);

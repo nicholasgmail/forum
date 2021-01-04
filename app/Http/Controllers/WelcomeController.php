@@ -55,7 +55,7 @@ class WelcomeController extends Controller
         return view('theme', [
             'name' => $theme[0]["name"],
             'theme_id' => $theme[0]["id"],
-            'masseges' => $masseges
+            'masseges' => $masseges;
         ]);
     }
 

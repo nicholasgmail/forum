@@ -1,3 +1,7 @@
+@php
+    use App\Models\Masseg;
+    use Carbon\Carbon;
+@endphp
 @extends('layouts.app')
 
 @section('content')
@@ -7,16 +11,29 @@
     <div class="row justify-content-center">
         <div id="message" class="col-md-8">
             @foreach ($masseges->items() as $masseg)
-            <div class="card text-center mb-3">
+            <div id='card-{{$masseg->messeg_id}}' class="card mb-3">
                 <div class="card-header">
                    {{ $masseg->name}}
                 </div>
+                @php
+                $ms = Masseg::where('id', $masseg->massegs_id)->get();
+                @endphp               
+                @if ($masseg->massegs_id > 0)
                 <div class="card-body">
-                    <h5 class="card-title">{{$masseg->title}}</h5>
+                    <div class="ms-3 pt-3">
+                    <p class="blockquote-footer mb-0"><small> {{$ms["0"]->text}}</small></p>
+                    </div>
+                </div>
+                @endif
+
+                <div class="card-body">
                     <p class="card-text">{{$masseg->text}}</p>
                 </div>
+                <div class="card-body text-end">
+                <a href="/quote/{{$masseg->messeg_id}}" class="stretched-link">quote</a>
+                </div>
                 <div class="card-footer text-muted">
-                  {{$masseg->created_at}}
+                  {{Carbon::parse($masseg->created_at)}}
                 </div>
             </div>
             @endforeach

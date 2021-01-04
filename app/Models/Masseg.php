@@ -14,7 +14,7 @@ class Masseg extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
+        'massegs_id',
         'text',
     ];
 
@@ -36,15 +36,14 @@ class Masseg extends Model
     public static function get_theme_messeg($theme)
     {
 
-        $masseges= Forum::where('theme_id', '=', $theme)
+        $masseges = Forum::where('theme_id', '=', $theme)
             ->join('massegs', function ($join) {
-                $join->on('forums.messeg_id', '=', 'massegs.id')->select('text', 'title');
+                $join->on('forums.messeg_id', '=', 'massegs.id')->select('text', 'id', 'massegs_id');
             })
             ->join('users', function ($join) {
                 $join->on('forums.user_id', '=', 'users.id')->select('name');
-            })
+            })            
             ->paginate(3);
-
         return $masseges;
     }
 }

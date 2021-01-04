@@ -17,7 +17,6 @@ class ThemeController extends Controller
     public function index()
     {
         $masseges = Masseg::get_masseg();
-
         return view('theme', ['masseges' => $masseges]);
     }
 
@@ -52,7 +51,6 @@ class ThemeController extends Controller
         $theme = Theme::find($theme);
         $theme_id = $theme[0]['id'];
         $masseges = Masseg::get_theme_messeg($theme_id);
-
 
         return view('theme', [
             'name' => $theme[0]["name"],
