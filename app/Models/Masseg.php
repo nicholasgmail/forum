@@ -36,16 +36,30 @@ class Masseg extends Model
     public static function get_theme_messeg($theme)
     {
 
-        $masseges = Forum::where('theme_id', '=', $theme)
+        $masseges_coment = Forum::where('theme_id', '=', $theme)
             ->join('massegs', function ($join) {
-                $join->on('forums.messeg_id', '=', 'massegs.id');
+                $join->on('forums.messeg_id', '=', 'massegs.id')
+                    ->where('massegs_id', '>', '0');
             })
             ->join('users', function ($join) {
                 $join->on('forums.user_id', '=', 'users.id');
             })
-            ->select('forums.messeg_id', 'forums.user_id', 'forums.theme_id', 'users.name', 'massegs.text', 'massegs.massegs_id', 'massegs.created_at')
+            ->select('users.name', 'massegs.text', 'massegs.massegs_id', 'massegs.created_at')->get();
+
+
+        $masseges = Forum::where('theme_id', '=', $theme)
+            ->join('massegs', function ($join) {
+                $join->on('forums.messeg_id', '=', 'massegs.id')
+                    ->where('massegs_id', '=', '0');
+            })
+            ->join('users', function ($join) {
+                $join->on('forums.user_id', '=', 'users.id');
+            })
+            ->select('forums.messeg_id', 'forums.user_id', 'forums.theme_id', 'users.name', 'massegs.text', 'massegs.created_at')
             ->orderBy('massegs.created_at', 'desc')
-            ->paginate(3);
-        return $masseges;
+            ->paginate(10);
+        $collection = collect([$masseges, $masseges_coment]);
+
+        return $collection;
     }
 }

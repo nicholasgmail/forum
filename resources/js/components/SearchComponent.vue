@@ -55,7 +55,7 @@ export default {
           this.isActive = false;
         }
       } catch (error) {
-        //console.error("Ошибка:", error);
+        console.error("Ошибка:", error);
       }
     },
   },

@@ -14,7 +14,7 @@ class Theme extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name', 'text'
     ];
     /**
      * All theme
@@ -23,7 +23,7 @@ class Theme extends Model
      */
     public static function get_theme()
     {
-        $themes = Theme::orderBy('id', 'desc')->paginate(4);
+        $themes = Theme::orderBy('id', 'desc')->paginate(10);
 
         return $themes;
     }

@@ -10,11 +10,14 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">{{$them->name}}</h5>
+                        <p class="font-monospace text-truncate" style="max-width: 200px;">
+                            {{$them->text}}
+                        </p>
                     </div>
                 </div>
             </a>
         </div>
-    @endforeach
+        @endforeach
     </div>
     <div class="row">
         <div class="col-md-8 mt-3">

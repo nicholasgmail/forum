@@ -54,8 +54,10 @@ class ThemeController extends Controller
 
         return view('theme', [
             'name' => $theme[0]["name"],
+            'text' => $theme[0]["text"],
             'theme_id' => $theme[0]["id"],
-            'masseges' => $masseges
+            'masseges' => $masseges[0],
+            'comments' => $masseges[1],
         ]);
     }
 

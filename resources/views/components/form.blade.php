@@ -37,11 +37,12 @@
             method: 'POST',
                     body: JSON.stringify($data),
                     headers: {
-            'Content-Type': 'application/json',
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': $valueMeta
                     }
                 });
-                if(response.status='200'){
+                const $result = await response.json();
+                if(response.status='200' && $result.success){
                     var $now = new Date();
                     $now = $now.toLocaleDateString('fr-CA') + ' ' + $now.toLocaleTimeString();
                     addMessag($userNameMessag.value, $textForm.value, $now );
@@ -57,13 +58,30 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
                                                     <div class="toast-body">
-                                                        Adding messages.
+                                                       ${$result.success}
                                             </div>
                                                 </div> `
                 $toastMain.insertAdjacentHTML('afterbegin', $messageToast);
-                toastClose();
-                $textForm.value = '';
+                }else{
+                    const $messageToast = ` <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="
+                                            z-index: 2000;
+                                            position: fixed;
+                                            top: 1%;
+                                            left: 1%;
+                                        ">
+                                                    <div class="toast-header">
+                                                        <strong class="me-auto">Messag</strong>
+                                                        <small class="text-muted">just now</small>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body">
+                                                       ${$result.errors.text['0']}
+                                            </div>
+                                                </div> `
+                $toastMain.insertAdjacentHTML('afterbegin', $messageToast);
                 }
+                 toastClose();
+                $textForm.value = '';
                 return response.status;
             } catch (error) {
             console.log('Ошибка:', error);
@@ -72,6 +90,9 @@
         }
          const toastClose = function f(){
              const $closeToast = document.querySelector(".toast");
+             setTimeout(function(){
+                $closeToast.remove();
+             },5000)
             $closeToast.addEventListener("click", event=>{
                 $elem = event.target;
                 if($elem.classList.contains("btn-close")){

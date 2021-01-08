@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Theme;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -38,13 +39,32 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$request->accepts(['text/html', 'application/json'])) {
+            return false;
+        }
+        $messages = [
+            'name.required' => 'please fill in the value name',
+            'name.max' => 'value greater than 255',
+            'name.unique' => 'the theme exists',
+            'text.required' => 'please fill in the value text',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255|unique:themes',
+            'text' => 'required',
+        ], $messages);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        };
         $data = $request->all();
         $new_theme = Theme::create([
             'name' => $data["name"],
+            'text' => $data["text"],
         ]);
-        $data = ['id' => $new_theme->id];
+        $data = collect(['id' => $new_theme->id]);
         return response()
             ->json($data)
-            ->header('Content-Type', 'text/plain');
+            ->header('Content-Type', 'application/json');
+
     }
 }
