@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Masseg;
 use Illuminate\Http\Request;
 use App\Models\Theme;
 

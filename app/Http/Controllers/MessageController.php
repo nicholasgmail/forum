@@ -65,10 +65,14 @@ class MessageController extends Controller
             'theme_id' => $data['theme'],
             'messeg_id' => $new_messag->id
         ]);
-        $data = collect(['success' => 'Message sent']);
+        $data_success = collect(['success' => 'Message sent']);
+        if ($data['masseg'] == 0) {
             return response()
-            ->json($data, 200)
-            ->header('Content-Type', 'application/json');
+                ->json($data_success, 200)
+                ->header('Content-Type', 'application/json');
+        } else {
+            return redirect('/theme' . '/' . $data['theme']);
+        }
     }
 
     /**
