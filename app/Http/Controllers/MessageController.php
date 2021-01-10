@@ -134,12 +134,15 @@ class MessageController extends Controller
      * @param  \App\Models\Masseg  $masseg
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Masseg $masseg)
+    public function destroy(Masseg $masseg)
     {
-        $data = $request->all();
+        $dt= Masseg::find($masseg->id);
+        Masseg::where('massegs_id', '=', $dt->id)->delete();
+        Forum::where('messeg_id', '=', $dt->id)->delete();
+        $masseg->delete();
 
         return response()
-            ->json("data_success", 200)
+            ->json('success', 200)
             ->header('Content-Type', 'application/json');
     }
 }

@@ -92,6 +92,14 @@ class ThemeController extends Controller
      */
     public function destroy(Theme $theme)
     {
-        //
+        $dt = Theme::find($theme->id);
+        $mes = Forum::where('theme_id', '=', $dt->id)->pluck('messeg_id');
+        Masseg::where('id', '=', $mes)->delete();
+        Forum::where('theme_id', '=', $dt->id)->delete();
+        $theme->delete();
+
+        return response()
+            ->json('success', 200)
+            ->header('Content-Type', 'application/json');
     }
 }

@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('create-theme', require('./components/CreateTheme.vue').default);
 Vue.component('delete-message', require('./components/DeleteMessage.vue').default);
+Vue.component('delete-theme', require('./components/DeleteTheme.vue').default);
 Vue.component('search-component', require('./components/SearchComponent.vue').default);
 
 /**

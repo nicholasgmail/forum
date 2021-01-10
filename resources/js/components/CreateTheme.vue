@@ -59,10 +59,14 @@ export default {
       result: [],
     };
   },
+  props: {
+    user: Number,
+  },
   mounted() {},
   methods: {
     addName: async function () {
       this.data_json = {
+        user: this.user,
         name: this.theme,
         text: this.text,
       };
@@ -99,17 +103,17 @@ export default {
     },
     add: function (id, theme, text) {
       const $theme = document.querySelector("#theme");
-      const $themeAdd = `<div class="col-md-6">
-            <a href="theme/${id}">
+      const $themeAdd = `<div id="card_theme_${id}"  class="col-md-6">
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                <a href="theme/${id}">
                     <div class="card-body">
-                        <h5 class="card-title">${theme}</h5>
-                        <p class="font-monospace text-truncate" style="max-width: 200px;">
+                        <h5 class="card-title text-white">${theme}</h5>
+                        <p class="font-monospace text-truncate text-white" style="max-width: 200px;">
                             ${text}
                         </p>
                     </div>
+                 </a>
                 </div>
-            </a>
         </div>`;
       $theme.insertAdjacentHTML("afterbegin", $themeAdd);
     },

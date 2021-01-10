@@ -35,6 +35,7 @@ Route::get('/quote/{masseg}', [MessageController::class, 'quote'])->name('quote'
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/set_message', [MessageController::class, 'store']);
-    Route::get('/delete_messag?id={masseg}', [MessageController::class, 'destroy']);
+    Route::get('/delete_messag/{masseg}', [MessageController::class, 'destroy']);
+    Route::get('/delete_theme/{theme}', [ThemeController::class, 'destroy']);
     Route::post('/set_theme', [HomeController::class, 'store']);
 });

@@ -1,7 +1,7 @@
 
 <template>
-  <form class="float-end" role="form" @submit.prevent="deleteMessag">
-    <button type='submit' class="btn btn-link">delete</button>
+  <form class="float-end" role="form" @submit.prevent="deleteTheme">
+    <button type='submit' class="btn btn-warning">delete</button>
   </form>
 </template>
 
@@ -17,9 +17,9 @@ export default {
   },
   mounted() {},
   methods: {
-    deleteMessag: async function () {
+    deleteTheme: async function () {
       try {
-        const response = await fetch("/delete_messag/" + this.id, {
+        const response = await fetch("/delete_theme/" + this.id, {
           method: "GET",
           headers: {
             "Content-Type": "text/plain",
@@ -27,7 +27,7 @@ export default {
           },
         });
         this.result = await response.json();
-        const $message = document.querySelector(`#card_messag_${this.id}`)
+        const $message = document.querySelector(`#card_theme_${this.id}`)
         $message.remove();
       } catch (error) {
         console.error("Ошибка:", error);

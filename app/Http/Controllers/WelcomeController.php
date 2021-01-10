@@ -15,7 +15,13 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $theme = Theme::orderBy('created_at', 'desc')->get();
+        $theme =Theme::join('forums', function ($join) {
+                $join->on('themes.id', '=', 'forums.theme_id')
+                ->where('forums.messeg_id', '=', "null");
+            })
+            ->select('forums.user_id', 'forums.theme_id', 'themes.name', 'themes.created_at')
+            ->orderBy('themes.created_at', 'desc')
+            ->get();
 
         return view('welcome', compact('theme'));
     }

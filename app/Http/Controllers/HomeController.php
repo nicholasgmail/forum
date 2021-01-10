@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Forum;
 use App\Models\Theme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -61,10 +62,15 @@ class HomeController extends Controller
             'name' => $data["name"],
             'text' => $data["text"],
         ]);
+        Forum::create([
+            'user_id' => $data['user'],
+            'theme_id' => $new_theme->id,
+            'messeg_id' => "null"
+        ]);
+
         $data = collect(['id' => $new_theme->id]);
         return response()
             ->json($data)
             ->header('Content-Type', 'application/json');
-
     }
 }
