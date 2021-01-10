@@ -134,8 +134,12 @@ class MessageController extends Controller
      * @param  \App\Models\Masseg  $masseg
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Masseg $masseg)
+    public function destroy(Request $request, Masseg $masseg)
     {
-        //
+        $data = $request->all();
+
+        return response()
+            ->json("data_success", 200)
+            ->header('Content-Type', 'application/json');
     }
 }

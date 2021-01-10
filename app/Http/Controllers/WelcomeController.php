@@ -15,7 +15,7 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $theme = Theme::get();
+        $theme = Theme::orderBy('created_at', 'desc')->get();
 
         return view('welcome', compact('theme'));
     }

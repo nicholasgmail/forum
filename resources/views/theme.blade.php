@@ -14,16 +14,21 @@ use Carbon\Carbon;
         </div>
         <div id="message" class="col-md-8">
             @foreach ($masseges->items() as $masseg)
-            <div id='card-{{$masseg->messeg_id}}' class="card mb-3">
+            <div id="card_messag_{{$masseg->messeg_id}}" class="card mb-3">
                 <div class="card-header">
                     {{ $masseg->name}}
+                    @if ($masseg->user_id == auth()->user()->id)
+                        <delete-message :id={{$masseg->messeg_id}}></delete-message>
+                    @endif
                 </div>
                 <div class="card-body">
                     <p class="card-text">{{$masseg->text}}</p>
                 </div>
-                <div class="card-body text-end">
-                    <a href="/quote/{{$masseg->messeg_id}}" class="stretched-link">quote</a>
+                @auth
+                    <div class="card-body text-end">
+                    <a href="/quote/{{$masseg->messeg_id}}">quote</a>
                 </div>
+                @endauth
                 @php
                     $massegId = $masseg->messeg_id;
                 @endphp
